@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automated Wafer Defect Classification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <header class="bg-slate-900 border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col gap-2">
+        <p class="text-sm uppercase tracking-wide text-emerald-400">Prototype</p>
+        <h1 class="text-3xl font-semibold">Automated Wafer Defect Classification</h1>
+        <p class="text-slate-300">
+          Upload a wafer map image or paste ASCII wafer data to get a predicted defect class using Google Gemini visual analysis.
+        </p>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-10 grid gap-8 md:grid-cols-[3fr,2fr]">
+      <section class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 flex flex-col gap-6">
+        <div>
+          <label class="text-lg font-semibold block mb-2">Upload mock wafer map</label>
+          <input
+            id="waferImage"
+            type="file"
+            accept="image/*"
+            class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-500/10 file:text-emerald-400 hover:file:bg-emerald-500/30"
+          />
+        </div>
+
+        <div>
+          <label class="text-lg font-semibold block mb-2">Or paste ASCII wafer map</label>
+          <textarea
+            id="asciiMap"
+            rows="6"
+            placeholder="..#####..
+..#####..
+..#####.."
+            class="w-full rounded-xl bg-slate-950/60 border border-slate-800 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          ></textarea>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <button id="simulateBtn" class="px-4 py-2 rounded-full border border-emerald-500/50 text-sm hover:bg-emerald-500/10 transition">
+            Simulate random wafer
+          </button>
+          <button
+            id="analyzeBtn"
+            class="px-6 py-2 rounded-full bg-emerald-500 text-slate-900 font-semibold hover:bg-emerald-400 transition disabled:opacity-40"
+            disabled
+          >
+            Analyze with Gemini
+          </button>
+          <button id="resetBtn" class="px-4 py-2 rounded-full border border-slate-700 text-sm hover:bg-slate-800 transition">Reset</button>
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-400 mb-2">Wafer canvas</p>
+          <canvas id="waferCanvas" width="400" height="400" class="w-full rounded-2xl bg-slate-950 border border-slate-800"></canvas>
+        </div>
+      </section>
+
+      <section class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 flex flex-col gap-4">
+        <h2 class="text-xl font-semibold">Gemini classification</h2>
+        <div id="status" class="text-sm text-slate-400">Waiting for input...</div>
+        <article id="resultCard" class="hidden rounded-2xl border border-emerald-400/40 bg-emerald-400/5 p-4">
+          <p class="text-sm uppercase tracking-wide text-emerald-300">Prediction</p>
+          <p id="prediction" class="text-2xl font-semibold text-emerald-100 mt-1"></p>
+          <p id="confidence" class="text-sm text-slate-200 mt-2"></p>
+          <p id="explanation" class="text-sm text-slate-100 mt-4"></p>
+        </article>
+        <div>
+          <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-1">Debug log</h3>
+          <pre id="debugLog" class="text-xs bg-slate-950 rounded-xl p-3 border border-slate-800 overflow-auto max-h-72"></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="text-center text-xs text-slate-500 pb-8">
+      Built with Tailwind, Canvas API, and Gemini 1.5 Flash.
+    </footer>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
+
